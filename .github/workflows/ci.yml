@@ -21,7 +21,7 @@ jobs:
             docker login -u ${{secrets.REGISTRY_USER}} -p ${{secrets.REGISTRY_PASS}}
             docker push ${{secrets.REGISTRY_USER}}/my-portfolio:${{github.run_number}}
             docker push ${{secrets.REGISTRY_USER}}/my-portfolio         
-deploy:
+  deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -31,7 +31,7 @@ deploy:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-         # port: ${{ secrets.PORT }}
+          # port: ${{ secrets.PORT }}
           script: |
-                  docker rm -f resume || echo ""
-                  docker run -d --name resume -p 8080:5001 ${{secrets.REGISTRY_USER}}/my-portfolio:${{github.run_number}}
+            docker rm -f resume || echo ""
+            docker run -d --name resume -p 8080:5001 ${{secrets.REGISTRY_USER}}/my-portfolio:${{github.run_number}}
